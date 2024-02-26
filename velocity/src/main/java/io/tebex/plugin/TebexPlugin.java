@@ -256,11 +256,13 @@ public class TebexPlugin implements Platform {
     private Optional<Player> getPlayer(Object player) {
         if(player == null) return Optional.empty();
 
-        if (isOnlineMode()) {
+        if (player instanceof UUID && isOnlineMode()) {
             return proxy.getPlayer((UUID) player);
+        } else if (player instanceof String) {
+            return proxy.getPlayer((String) player);
         }
 
-        return proxy.getPlayer((String) player);
+        return Optional.empty();
     }
 
     @Override
